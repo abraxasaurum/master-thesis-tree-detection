@@ -97,6 +97,30 @@ Scripts are organized by topic under `r_analysis/`.
   4. R-based statistical evaluation
 - Environment details are provided in the `environment/` directory.
 
+## Processing Order
+
+The experimental workflow follows a strict sequential order.
+
+1. **Pipeline 1 – Tree Crown Detection**
+   - The three detection models (Detectree2, TCD, DeepTrees) are trained independently.
+   - During training and inference, additional metrics and intermediate outputs are exported.
+   - Inference produces tree crown polygons (GeoPackage) for each method.
+
+2. **Intermediate Evaluation and Matching (R)**
+   - Detection outputs are matched to ground-truth tree crowns.
+   - Object-based detection metrics (precision, recall, F1, IoU) are computed.
+   - These matched detection outputs serve as the input for Pipeline 2.
+
+3. **Pipeline 2 – Feature Extraction and Modelling**
+   - Feature extraction is performed on the matched crown polygons.
+   - Species classification, condition assessment, and allometric modelling are applied.
+   - Outputs are exported for final statistical evaluation.
+
+4. **Final Statistical Analysis (R)**
+   - Downstream results are analysed and visualised.
+   - Comparisons across detection methods, species, and study areas are performed.
+
+
 ---
 
 ## License
